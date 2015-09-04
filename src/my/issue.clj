@@ -12,10 +12,12 @@
 
 ;int rgb = ((r&0x0ff)<<16)|((g&0x0ff)<<8)|(b&0x0ff);
 (defn my-rgb-2 [[r g b]]
-  (let [red (bit-shift-left 16 (bit-and r 0x0FF))
-        green (bit-shift-left 8 (bit-and g 0x0FF))
+  ;(^long
+  (let [red (bit-shift-left (bit-and r 0x0FF) 16)
+        green (bit-shift-left (bit-and g 0x0FF) 8)
         blue (bit-and b 0x0FF)]
-    (bit-or red green blue)))
+    (bit-or 0xFFFFFFFFF000000 (bit-or red green blue))))
+  ;)
 
 (defn existing-rgb [[r g b]]
   (rgb r g b))
