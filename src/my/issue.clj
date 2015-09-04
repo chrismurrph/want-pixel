@@ -20,6 +20,11 @@
 (defn existing-rgb [[r g b]]
   (rgb r g b))
 
+;
+; Change this to be either my-rgb-1 or my-rgb-2 or existing-rgb
+;
+(def step-three (partial my-rgb-2))
+
 (defn hexify-colour [[r g b]]
   (format "0x%x 0x%x 0x%x" r g b))
 
@@ -28,16 +33,21 @@
   [& args]
   (println "Image width: " w)
   (println "Image height: " h)
+  ;
+  ; STEP 1
+  ;
   (let [first-pixel (get-pixel ant 0 0)
         last-pixel (get-pixel ant (dec w) (dec h))
+        ;
+        ; STEP 2
+        ;
         first-colour (components-rgb first-pixel)
         last-colour (components-rgb last-pixel)
         ;
-        ; first-colour and last-colour are human readable
-        ; We now try to reverse the process as if we were going to write the pixels back to a different image
+        ; STEP 3
         ;
-        first-rgb (existing-rgb first-colour)
-        last-rgb (existing-rgb last-colour)
+        first-rgb (step-three first-colour)
+        last-rgb (step-three last-colour)
         ]
     (println "First pixel:" first-pixel (format "( 0x%x"first-pixel)")")
     (println "Last pixel:" last-pixel (format "( 0x%x"last-pixel)")")
